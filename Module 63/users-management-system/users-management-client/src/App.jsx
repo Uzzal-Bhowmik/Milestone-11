@@ -3,8 +3,8 @@ import "./App.css";
 
 function App() {
   const [users, setUsers] = useState([]);
+
   useEffect(() => {
-    // get method
     fetch("http://localhost:5000/users")
       .then((res) => res.json())
       .then((data) => setUsers(data));
@@ -15,10 +15,8 @@ function App() {
 
     const form = e.target;
     const name = form.name.value;
-    const age = form.age.value;
-    const user = { name, age };
+    const user = { name };
 
-    // post method
     fetch("http://localhost:5000/users", {
       method: "post",
       headers: {
@@ -33,33 +31,24 @@ function App() {
       });
   };
 
+  console.log(users);
+
   return (
     <div>
-      <h1>Hello User: {users.length}</h1>
+      <h1>Hello, Users: {users.length}</h1>
 
       <form onSubmit={handleAddUser}>
         <input type="text" name="name" id="" />
-        <br />
-        <input type="number" name="age" id="" />
         <br />
         <input type="submit" value="Add User" />
       </form>
 
       <div>
-        <ol>
-          {users.map((user) => (
-            <li
-              key={user.id}
-              style={{
-                fontWeight: "bold",
-                marginBottom: "10px",
-                fontSize: "1.2rem",
-              }}
-            >
-              Name: {user.name} ---- Age: {user.age}
-            </li>
-          ))}
-        </ol>
+        {users.map((user) => (
+          <li key={user.id}>
+            {user.id}) {user.name}
+          </li>
+        ))}
       </div>
     </div>
   );
