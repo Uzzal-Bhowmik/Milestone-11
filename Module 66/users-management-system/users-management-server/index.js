@@ -2,36 +2,35 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 5000;
 const cors = require("cors");
+const users = require("./data/users.json");
 
 // middleware
 app.use(cors());
 app.use(express.json());
 
-// users data
-const users = [
-  { id: 1, name: "Uzzal", age: 20 },
-  { id: 2, name: "Bura Kaka", age: 70 },
-  { id: 3, name: "Middle age man", age: 30 },
-];
-
+// get methods
 app.get("/", (req, res) => {
-  res.send("Users Management server is running");
+  res.send("Users management server is up and running");
 });
 
-// users get method
 app.get("/users", (req, res) => {
   res.send(users);
 });
 
-// users post method
+// post methods
+
 app.post("/users", (req, res) => {
   const newUser = req.body;
   newUser.id = users.length + 1;
+
+  // server side data handling
   users.push(newUser);
 
+  // client side data handling
   res.send(newUser);
 });
 
+// listen port
 app.listen(port, () => {
-  console.log("server is running on port: ", port);
+  console.log("Server is running on port: ", port);
 });
