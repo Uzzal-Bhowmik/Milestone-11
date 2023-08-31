@@ -56,8 +56,22 @@ async function run() {
       const newCoffee = {
         $set: {
           coffeeName: body.coffeeName,
+          quantity: body.quantity,
+          details: body.details,
+          taste: body.taste,
+          supplier: body.supplier,
+          category: body.category,
+          photo: body.photo,
         },
       };
+
+      const result = await coffeeCollection.updateOne(
+        filter,
+        newCoffee,
+        options
+      );
+
+      res.send(result);
 
       console.log(id, body);
     });

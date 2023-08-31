@@ -58,7 +58,7 @@ const CoffeeCard = ({ coffee, setDeletedId }) => {
         </div>
         <div className="btn-group btn-group-vertical space-y-3">
           <button className="btn btn-neutral">View</button>
-          <Link to={`/coffee/${_id}`} role="button">
+          <Link to={`/updateCoffee/${_id}`} role="button">
             <button className="btn btn-neutral">Edit</button>
           </Link>
           <button className="btn btn-error" onClick={handleDelete}>
