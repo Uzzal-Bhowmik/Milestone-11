@@ -30,12 +30,42 @@ async function run() {
       res.send(books);
     });
 
+    app.get("/books/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const book = await bookCollection.findOne(query);
+
+      res.send(book);
+    });
+
     app.post("/books", async (req, res) => {
       const newBook = req.body;
 
       const result = await bookCollection.insertOne(newBook);
 
       res.send(newBook);
+    });
+
+    app.put("/books/:id", async (req, res) => {
+      const id = req.params.id;
+      const body = req.body;
+
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedBook = {
+        $set: {
+          bookName: body.bookName,
+          author: body.author,
+        },
+      };
+
+      const result = await bookCollection.updateOne(
+        filter,
+        updatedBook,
+        options
+      );
+
+      res.send(result);
     });
 
     app.delete("/books/:id", async (req, res) => {

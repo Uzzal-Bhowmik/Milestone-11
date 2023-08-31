@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 function App() {
   const [books, setBooks] = useState(useLoaderData());
@@ -76,6 +76,9 @@ function App() {
           books.map((book) => (
             <li key={book._id}>
               {book.bookName} : {book.author}
+              <Link to={`/update/${book._id}`}>
+                <button>Update Info</button>
+              </Link>
               <button onClick={() => handleDeleteBook(book._id)}>X</button>
             </li>
           ))}
