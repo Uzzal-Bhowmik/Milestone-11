@@ -31,8 +31,22 @@ function App() {
       });
   };
 
-  console.log(books);
+  // delete method
+  const handleDeleteBook = (_id) => {
+    fetch(`http://localhost:5000/books/${_id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount !== 0) {
+          window.alert("Book Deleted from database Successfully");
+          const rest = books.filter((book) => book._id !== _id);
+          setBooks(rest);
+        }
+      });
+  };
 
+  console.log(books);
   return (
     <>
       <h1>Books Library</h1>
@@ -62,6 +76,7 @@ function App() {
           books.map((book) => (
             <li key={book._id}>
               {book.bookName} : {book.author}
+              <button onClick={() => handleDeleteBook(book._id)}>X</button>
             </li>
           ))}
       </ol>
