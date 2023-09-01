@@ -9,8 +9,7 @@ const Banner = () => {
     <div className="carousel w-full">
       <div
         id="slide1"
-        className="carousel-item relative w-full"
-        style={{ maxHeight: "90vh" }}
+        className="carousel-item relative w-full h-[500px] md:h-[90vh]"
       >
         <img src={img1} className="w-full" />
 
@@ -46,8 +45,7 @@ const Banner = () => {
       </div>
       <div
         id="slide2"
-        className="carousel-item relative w-full"
-        style={{ maxHeight: "90vh" }}
+        className="carousel-item relative w-full h-[500px] md:h-[80vh]"
       >
         <img src={img2} className="w-full" />
         <div className="bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0.00)] absolute flex items-center text-white h-full w-1/2 pl-14">
@@ -81,8 +79,7 @@ const Banner = () => {
       </div>
       <div
         id="slide3"
-        className="carousel-item relative w-full"
-        style={{ maxHeight: "90vh" }}
+        className="carousel-item relative w-full h-[500px] md:h-[80vh]"
       >
         <img src={img3} className="w-full" />
         <div className="bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0.00)] absolute flex items-center text-white h-full w-1/2 pl-14">
@@ -116,8 +113,7 @@ const Banner = () => {
       </div>
       <div
         id="slide4"
-        className="carousel-item relative w-full"
-        style={{ maxHeight: "90vh" }}
+        className="carousel-item relative w-full h-[500px] md:h-[80vh]"
       >
         <img src={img4} className="w-full" />
         <div className="bg-gradient-to-r from-[#151515] to-[rgba(21, 21, 21, 0.00)] absolute flex items-center text-white h-full w-1/2 pl-14">

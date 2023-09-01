@@ -17,7 +17,7 @@ const AboutUs = () => {
           className="absolute md:w-1/2 hidden md:inline md:-bottom-14 right-10 rounded-lg border-white border-8 h-[280px]"
         />
       </div>
-      <div className="w-[55%] space-y-7">
+      <div className="w-[85%] md:w-[55%] space-y-7">
         <h4 className="text-3xl font-semibold text-red-400">About Us</h4>
         <h1 className="text-6xl font-bold">
           We are qualified & of experience in this field
