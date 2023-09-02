@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const ServiceCard = ({ service }) => {
-  const { title, img, price } = service;
+  const { _id, title, img, price } = service;
 
   return (
     <div className="card w-96 bg-base-100 border border-2">
@@ -14,7 +14,7 @@ const ServiceCard = ({ service }) => {
 
         <div className="flex justify-between items-center text-[#FF3811] font-bold mt-3 text-xl">
           <span>Price: {price}</span>
-          <Link to="">
+          <Link to={`http://localhost:5000/services/${_id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
