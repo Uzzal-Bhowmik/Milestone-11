@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import loginPic from "../../assets/images/login/login.svg";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/ContextAuth";
 
-const Login = () => {
-  const handleLogin = (e) => {
+const Register = () => {
+  const { signUp, user } = useContext(AuthContext);
+
+  const handleRegister = (e) => {
     e.preventDefault();
 
     const form = e.target;
@@ -11,7 +14,14 @@ const Login = () => {
     const password = form.password.value;
 
     console.log(email, password);
+
+    signUp(email, password)
+      .then((result) => {
+        console.log(result.user);
+      })
+      .catch((error) => console.log(error));
   };
+
   return (
     <div className="hero mt-12 mb-20">
       <div className="hero-content flex-col lg:flex-row justify-between lg:w-10/12">
@@ -21,9 +31,20 @@ const Login = () => {
 
         <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
           <div className="card-body">
-            <h1 className="text-3xl font-bold text-center">Login</h1>
+            <h1 className="text-3xl font-bold text-center">Sign Up</h1>
 
-            <form onSubmit={handleLogin}>
+            <form onSubmit={handleRegister}>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Name</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="name"
+                  className="input input-bordered"
+                />
+              </div>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -52,11 +73,11 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                <button className="btn btn-primary">Sign Up</button>
                 <p className="text-sm text-center pt-2">
-                  Don't have an account?{" "}
-                  <Link to="/register" className="text-primary">
-                    Create One
+                  Already have an account?{" "}
+                  <Link to="/login" className="text-primary">
+                    Sign In
                   </Link>
                 </p>
               </div>
@@ -68,4 +89,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
