@@ -1,0 +1,21 @@
+.slick-next::before,
+.slick-prev::before {
+  color: #ff3811 !important;
+  font-size: 40px !important;
+  z-index: 9999 !important;
+}
+
+.slick-next,
+.slick-prev {
+  z-index: 9999 !important;
+}
+.slick-next {
+  right: 0 !important;
+}
+.slick-prev {
+  left: 0 !important;
+}
+
+.slick-track {
+  left: 31px !important;
+}
