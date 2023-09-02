@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../../assets/logo.svg";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../providers/ContextAuth";
 
 const NavigationBar = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogOut = () => {
+    logOut()
+      .then(() => "")
+      .catch((err) => console.error(err));
+  };
+
   return (
     <div className="navbar bg-base-100 h-24">
       <div className="navbar-start">
@@ -41,6 +50,9 @@ const NavigationBar = () => {
             </li>
             <li>
               <Link to="/">Contact</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
             </li>
 
             <li className="flex-row">
@@ -102,6 +114,9 @@ const NavigationBar = () => {
           <li>
             <Link to="/">Contact</Link>
           </li>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
         </ul>
       </div>
       <div className="navbar-end">
@@ -138,6 +153,11 @@ const NavigationBar = () => {
             />
           </svg>
         </button>
+        {user?.uid && (
+          <button className="btn btn-secondary me-5" onClick={handleLogOut}>
+            Log Out
+          </button>
+        )}
         <button className="btn btn-outline btn-error">Appointment</button>
       </div>
     </div>

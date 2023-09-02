@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -20,7 +21,7 @@ const ContextAuth = ({ children }) => {
   };
 
   const signIn = (email, password) => {
-    return signInWithPopup(auth, email, password);
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
   const logOut = () => {

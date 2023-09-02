@@ -10,8 +10,6 @@ const Services = () => {
       .then((data) => setServices(data));
   }, []);
 
-  console.log(services);
-
   return (
     <div className="mb-28">
       <div className="text-center space-y-5">

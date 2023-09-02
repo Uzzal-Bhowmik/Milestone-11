@@ -18,6 +18,8 @@ const Register = () => {
     signUp(email, password)
       .then((result) => {
         console.log(result.user);
+        form.reset();
+        alert("Signed Up Successfully!");
       })
       .catch((error) => console.log(error));
   };

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import loginPic from "../../assets/images/login/login.svg";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../providers/ContextAuth";
 
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
+
   const handleLogin = (e) => {
     e.preventDefault();
 
@@ -10,7 +13,13 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
 
-    console.log(email, password);
+    signIn(email, password)
+      .then((result) => {
+        console.log(result.user);
+        form.reset();
+        alert("Signed In Successfully!");
+      })
+      .catch((error) => console.error(error));
   };
   return (
     <div className="hero mt-12 mb-20">
