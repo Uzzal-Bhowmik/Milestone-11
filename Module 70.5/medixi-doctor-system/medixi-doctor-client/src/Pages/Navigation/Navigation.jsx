@@ -20,7 +20,7 @@ const Navigation = () => {
         <Link to="/">Home</Link>
       </li>
       <li>
-        <HashLink smooth to="#services">
+        <HashLink smooth to="/#services">
           Services
         </HashLink>
       </li>

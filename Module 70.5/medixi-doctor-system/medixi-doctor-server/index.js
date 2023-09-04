@@ -41,6 +41,20 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/appointments", async (req, res) => {
+      const appointmentEmail = req.query?.email;
+
+      let query = {};
+
+      if (appointmentEmail) {
+        query = { email: appointmentEmail };
+      }
+
+      const result = await appointCollection.find(query).toArray();
+
+      res.send(result);
+    });
+
     app.post("/appointments", async (req, res) => {
       const body = req.body;
       const result = await appointCollection.insertOne(body);

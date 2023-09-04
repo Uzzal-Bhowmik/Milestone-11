@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
-import { json, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import appointBanner from "../../assets/appoint-banner.jpg";
-import "./Appointment.css";
 import { AuthContext } from "../../context/AuthProvider";
 
 const Appointment = () => {
@@ -16,7 +15,6 @@ const Appointment = () => {
 
     const form = e.target;
     const userName = form.userName.value;
-    const userEmail = form.userEmail.value;
     const date = form.date.value;
 
     const appointment = {
@@ -26,6 +24,7 @@ const Appointment = () => {
       field,
       serviceFee,
       image,
+      email: user?.email,
     };
 
     fetch("http://localhost:5000/appointments", {
@@ -37,7 +36,9 @@ const Appointment = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        if (data.insertedId) {
+          alert("Appointment Scheduled Successfully!");
+        }
       });
   };
 
@@ -60,7 +61,7 @@ const Appointment = () => {
           </h1>
           <p className="font-semibold text-gray-200 text-sm mt-2 mb-10">
             Conveniently drive go forward architectures with future-proof growth
-            strategies. Energistically supply low-risk high-yield process
+            strategies. Energetically supply low-risk high-yield process
             improvements for mission-critical testing procedures and visual
             mockups.
           </p>

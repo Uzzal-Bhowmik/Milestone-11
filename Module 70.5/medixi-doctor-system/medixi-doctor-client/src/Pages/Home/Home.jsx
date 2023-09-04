@@ -1,6 +1,5 @@
 import React from "react";
 import "./Home.css";
-import { Link } from "react-router-dom";
 import banner from "../../assets/banner.jpg";
 import Services from "../Services/Services";
 import { HashLink } from "react-router-hash-link";
@@ -23,7 +22,7 @@ const Home = () => {
           </h1>
           <p className="font-semibold text-gray-200 text-sm mt-2 mb-10">
             Conveniently drive go forward architectures with future-proof growth
-            strategies. Energistically supply low-risk high-yield process
+            strategies. Energetically supply low-risk high-yield process
             improvements for mission-critical testing procedures and visual
             mockups.
           </p>

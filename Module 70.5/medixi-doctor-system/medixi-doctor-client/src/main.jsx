@@ -8,6 +8,8 @@ import AuthProvider from "./context/AuthProvider.jsx";
 import Login from "./Pages/Login/Login.jsx";
 import Register from "./Pages/Register/Register.jsx";
 import Appointment from "./Pages/Appointment/Appointment.jsx";
+import PrivateRoute from "./Pages/PrivateRoute/PrivateRoute.jsx";
+import ScheduledAppointments from "./Pages/ScheduledAppointments/ScheduledAppointments.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +32,20 @@ const router = createBrowserRouter([
         path: "/doctors/:id",
         loader: async ({ params }) =>
           await fetch(`http://localhost:5000/doctors/${params.id}`),
-        element: <,
+        element: (
+          <PrivateRoute>
+            <Appointment />
+          </PrivateRoute>
+        ),
+      },
+
+      {
+        path: "appointments",
+        element: (
+          <PrivateRoute>
+            <ScheduledAppointments />
+          </PrivateRoute>
+        ),
       },
     ],
   },
