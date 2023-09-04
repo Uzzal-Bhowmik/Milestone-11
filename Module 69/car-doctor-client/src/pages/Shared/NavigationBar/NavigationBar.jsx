@@ -166,7 +166,11 @@ const NavigationBar = () => {
           </svg>
         </button>
         {user?.uid && (
-          <button className="btn btn-secondary me-5" onClick={handleLogOut}>
+          <button
+            className="btn btn-secondary me-5"
+            onClick={handleLogOut}
+            title={user?.email}
+          >
             Log Out
           </button>
         )}
