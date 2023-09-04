@@ -1,22 +1,22 @@
 import React, { useContext } from "react";
-import "./Login.css";
-import { AuthContext } from "../../context/AuthProvider";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthProvider";
 
-const Login = () => {
-  const { signIn } = useContext(AuthContext);
+const Register = () => {
+  const { signUp } = useContext(AuthContext);
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
 
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
 
-    signIn(email, password)
+    signUp(email, password)
       .then((res) => {
         console.log(res.user);
-        alert("Signed In Successfully!");
+
+        alert("Signed Up Successfully!");
         form.reset();
       })
       .catch((err) => console.error(err));
@@ -30,20 +30,20 @@ const Login = () => {
             Medical & General Care
           </p>
           <h1 className="text-6xl text-[var(--primary-color)] mt-4 mb-6 font-bold">
-            Sign In
+            Sign Up
           </h1>
           <p className="text-gray-400 mb-10">
             Proactively revolutionize granular customer service after pandemic
             internal or organic sources istinctively impact proactive human
           </p>
 
-          <Link to="/register">
+          <Link to="/login">
             <button className="btn btn-info font-bold btn-wide mb-1 rounded-lg">
-              Sign Up &gt;
+              Sign In &gt;
             </button>
           </Link>
           <p className="font-semibold text-gray-400 ps-2">
-            Dont Have an Account?
+            Already Have an Account?
           </p>
         </div>
 
@@ -51,9 +51,9 @@ const Login = () => {
           {/* right header */}
           <div className="bg-[#27467c] flex justify-between items-center text-white p-10">
             <div>
-              <h4 className="text-3xl font-bold">Welcome Back!</h4>
+              <h4 className="text-3xl font-bold">Let's Get Started!</h4>
               <p className="text-gray-200 mt-2 text-sm">
-                Sign in to make appointments with our doctors
+                Sign up to get yourself the best doctors in the town.
               </p>
             </div>
             <div className="bg-[#18cfed] p-4 rounded-full hover:bg-black cursor-pointer transition-all ease duration-200">
@@ -74,7 +74,7 @@ const Login = () => {
           </div>
 
           {/* right side form */}
-          <form className="login-form form pt-10" onSubmit={handleLogin}>
+          <form className="login-form pt-10" onSubmit={handleRegister}>
             <label className="mb-1 ps-3 font-semibold text-gray-400">
               Email
             </label>
@@ -95,7 +95,7 @@ const Login = () => {
               className="btn btn-block btn-info font-bold rounded-none"
               type="submit"
             >
-              Login
+              Register
             </button>
           </form>
         </div>
@@ -104,4 +104,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

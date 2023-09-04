@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const DoctorCard = ({ doctor }) => {
-  const { name, field, details, image } = doctor;
+  const { _id, name, field, details, image } = doctor;
   return (
     <div className="card border border-2 shadow-md transition ease-in-out duration-500 hover:shadow-xl ">
       <figure>
@@ -57,8 +57,8 @@ const DoctorCard = ({ doctor }) => {
           </div>
           {/* ---- */}
           <div>
-            <Link className="text-[#27467c] font-bold">
-              Read More{" "}
+            <Link className="text-[#27467c] font-bold" to={`/doctors/${_id}`}>
+              Make an appointment{" "}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

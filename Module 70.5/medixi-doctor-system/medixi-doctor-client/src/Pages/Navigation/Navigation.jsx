@@ -1,10 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 import "./Navigation.css";
 import { HashLink } from "react-router-hash-link";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Navigation = () => {
+  const { user, logOut } = useContext(AuthContext);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((err) => console.error(err));
+  };
+
   const navLinks = (
     <>
       <li>
@@ -15,9 +24,11 @@ const Navigation = () => {
           Services
         </HashLink>
       </li>
-      <li>
-        <Link to="appointments">Appointments</Link>
-      </li>
+      {user?.uid && (
+        <li>
+          <Link to="appointments">Your Appointments</Link>
+        </li>
+      )}
       <li>
         <Link to="login">Login</Link>
       </li>
@@ -56,11 +67,13 @@ const Navigation = () => {
         </Link>
       </div>
 
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 font-semibold">{navLinks}</ul>
+      <div className="navbar-center hidden lg:flex mr-4">
+        <ul className="menu menu-horizontal px-1 font-semibold space-x-3">
+          {navLinks}
+        </ul>
       </div>
 
-      <div className="navbar-end space-x-5">
+      <div className="navbar-end space-x-4">
         <button className="btn btn-circle bg-[var(--primary-color)] hover:bg-[var(--primary-color)]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -93,6 +106,15 @@ const Navigation = () => {
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
         </button>
+
+        {user?.uid && (
+          <button
+            className="btn btn-info btn-outline rounded-none font-bold"
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
+        )}
 
         <HashLink to="#services" smooth>
           <button className="btn btn-info btn-outline rounded-none font-bold">
