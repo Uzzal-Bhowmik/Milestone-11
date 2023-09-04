@@ -15,6 +15,46 @@ const Bookings = () => {
       });
   }, []);
 
+  const handleDelete = (_id) => {
+    const proceed = confirm("Are you sure you want to delete?");
+    if (proceed) {
+      fetch(`http://localhost:5000/bookings/${_id}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.deletedCount > 0) {
+            const rest = bookingData.filter((booking) => booking._id !== _id);
+            setBookingData(rest);
+            alert("Data deleted successfully");
+          }
+        });
+    }
+  };
+
+  const handleConfirmBooking = (_id) => {
+    fetch(`http://localhost:5000/bookings/${_id}`, {
+      method: "PATCH",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: "confirm" }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount > 0) {
+          const rest = bookingData.filter((booking) => booking._id !== _id);
+          const updatedBooking = bookingData.find(
+            (booking) => booking._id === _id
+          );
+          updatedBooking.status = "confirm";
+
+          setBookingData([...rest, updatedBooking]);
+        }
+      });
+  };
+
   return (
     <div className="mb-20">
       <div
@@ -36,9 +76,7 @@ const Bookings = () => {
           <thead>
             <tr>
               <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
+                <label></label>
               </th>
               <th>Name</th>
               <th>Service</th>
@@ -48,7 +86,12 @@ const Bookings = () => {
           </thead>
           <tbody>
             {bookingData.map((booking) => (
-              <BookingTableRow key={booking._id} booking={booking} />
+              <BookingTableRow
+                key={booking._id}
+                booking={booking}
+                handleDelete={handleDelete}
+                handleConfirmBooking={handleConfirmBooking}
+              />
             ))}
           </tbody>
         </table>
