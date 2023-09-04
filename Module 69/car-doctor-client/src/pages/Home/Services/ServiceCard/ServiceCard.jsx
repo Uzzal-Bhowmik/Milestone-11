@@ -14,7 +14,7 @@ const ServiceCard = ({ service }) => {
 
         <div className="flex justify-between items-center text-[#FF3811] font-bold mt-3 text-xl">
           <span>Price: {price}</span>
-          <Link to={`http://localhost:5000/services/${_id}`}>
+          <Link to={`/services/${_id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

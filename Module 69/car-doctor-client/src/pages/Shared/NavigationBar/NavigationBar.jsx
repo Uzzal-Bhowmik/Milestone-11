@@ -51,9 +51,15 @@ const NavigationBar = () => {
             <li>
               <Link to="/">Contact</Link>
             </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
+            {!user?.uid ? (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            ) : (
+              <li>
+                <Link to="/bookings">Bookings</Link>
+              </li>
+            )}
 
             <li className="flex-row">
               <button className="btn btn-ghost btn-circle">
@@ -114,9 +120,15 @@ const NavigationBar = () => {
           <li>
             <Link to="/">Contact</Link>
           </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
+          {!user?.uid ? (
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          ) : (
+            <li>
+              <Link to="/bookings">Bookings</Link>
+            </li>
+          )}
         </ul>
       </div>
       <div className="navbar-end">
