@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         path: "/doctors/:id",
         loader: async ({ params }) =>
           await fetch(`http://localhost:5000/doctors/${params.id}`),
-        element: <Appointment />,
+        element: <,
       },
     ],
   },

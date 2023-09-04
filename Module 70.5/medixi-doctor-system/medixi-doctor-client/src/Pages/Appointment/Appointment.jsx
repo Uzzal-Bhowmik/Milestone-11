@@ -1,16 +1,44 @@
-import React from "react";
-import { useLoaderData } from "react-router-dom";
+import React, { useContext } from "react";
+import { json, useLoaderData } from "react-router-dom";
 import appointBanner from "../../assets/appoint-banner.jpg";
 import "./Appointment.css";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Appointment = () => {
   const doctor = useLoaderData();
   console.log(doctor);
 
-  const { field, name, serviceFee } = doctor;
+  const { user } = useContext(AuthContext);
+  const { field, name, serviceFee, image } = doctor;
 
   const handleAppointment = (e) => {
     e.preventDefault();
+
+    const form = e.target;
+    const userName = form.userName.value;
+    const userEmail = form.userEmail.value;
+    const date = form.date.value;
+
+    const appointment = {
+      userName,
+      date,
+      doctorName: name,
+      field,
+      serviceFee,
+      image,
+    };
+
+    fetch("http://localhost:5000/appointments", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(appointment),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
   };
 
   return (
@@ -110,10 +138,9 @@ const Appointment = () => {
 
             <input
               type="email"
-              name="userEmail"
-              placeholder="Enter Your Email"
-              required
+              defaultValue={user?.email}
               className="w-full"
+              disabled
             />
 
             <input

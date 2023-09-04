@@ -24,6 +24,9 @@ async function run() {
     await client.connect();
 
     const doctorCollection = client.db("medixiDoctorsDB").collection("doctors");
+    const appointCollection = client
+      .db("appointsDB")
+      .collection("appointCollection");
 
     app.get("/doctors", async (req, res) => {
       const data = await doctorCollection.find({}).toArray();
@@ -35,6 +38,12 @@ async function run() {
       const query = { _id: new ObjectId(id) };
       const result = await doctorCollection.findOne(query);
 
+      res.send(result);
+    });
+
+    app.post("/appointments", async (req, res) => {
+      const body = req.body;
+      const result = await appointCollection.insertOne(body);
       res.send(result);
     });
 
