@@ -15,7 +15,31 @@ const ScheduledAppointments = () => {
 
   return (
     <div>
-      <p>these are your appointments: {appointments.length}</p>
+      <div className="overflow-x-auto">
+        <table className="table">
+          {/* head */}
+          <thead>
+            <tr>
+              <th>
+                <label>
+                  <input type="checkbox" className="checkbox" />
+                </label>
+              </th>
+              <th>Doctor Details</th>
+              <th>Specialist</th>
+              <th>Date</th>
+              <th>Service Fee</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {/* row 1 */}
+            {
+                appointments.map(appointment => )
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
