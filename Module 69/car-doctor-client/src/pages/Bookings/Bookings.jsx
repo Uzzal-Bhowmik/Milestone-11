@@ -2,9 +2,12 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/ContextAuth";
 import checkoutBg from "../../assets/images/checkout/checkout.png";
 import BookingTableRow from "./BookingTableRow/BookingTableRow";
+import { useNavigate } from "react-router-dom";
 
 const Bookings = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const [bookingData, setBookingData] = useState([]);
   useEffect(() => {
@@ -18,7 +21,15 @@ const Bookings = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        setBookingData(data);
+        if (!data.error) {
+          setBookingData(data);
+        } else {
+          logOut()
+            .then(() => {
+              navigate("/");
+            })
+            .catch((err) => console.error(err));
+        }
       });
   }, []);
 

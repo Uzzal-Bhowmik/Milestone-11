@@ -21,14 +21,13 @@ const client = new MongoClient(uri, {
   },
 });
 
-// jwt token vefiy
+// jwt token verify
 const verifyJWT = (req, res, next) => {
   const authorization = req.headers.authorization;
-
   if (!authorization) {
     return res
       .status(401)
-      .send({ error: true, message: "Unauthorized Access" });
+      .send({ error: true, message: "unauthorized access" });
   }
 
   const token = authorization.split(" ")[1];
@@ -36,9 +35,10 @@ const verifyJWT = (req, res, next) => {
   jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, decoded) => {
     if (err) {
       return res
-        .status(403)
+        .status(401)
         .send({ error: true, message: "unauthorized access" });
     }
+
     req.decoded = decoded;
     next();
   });
@@ -60,7 +60,7 @@ async function run() {
         expiresIn: "1h",
       });
 
-      // since token is string, it's better to convert to JSON format
+      // since token is string, it's better to convert to JSON
       res.send({ token });
     });
 
@@ -90,9 +90,16 @@ async function run() {
 
     // bookings get method
     app.get("/bookings", verifyJWT, async (req, res) => {
-      // console.log(req.headers.authorization);
-
+      console.log(req.decoded);
       const bookingEmail = req.query.email;
+
+      // check token email and client email validation
+      if (req.decoded.email !== bookingEmail) {
+        return res
+          .status(403)
+          .send({ error: true, message: "forbidden access" });
+      }
+
       let query = {};
       if (bookingEmail) {
         query = { email: bookingEmail };
