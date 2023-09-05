@@ -74,7 +74,7 @@ const Register = () => {
           </div>
 
           {/* right side form */}
-          <form className="login-form pt-10" onSubmit={handleRegister}>
+          <form className="login-form form pt-10" onSubmit={handleRegister}>
             <label className="mb-1 ps-3 font-semibold text-gray-400">
               Email
             </label>

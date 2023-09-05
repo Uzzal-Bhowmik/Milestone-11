@@ -116,7 +116,7 @@ const Navigation = () => {
           </button>
         )}
 
-        <HashLink to="#services" smooth>
+        <HashLink to="/#services" smooth>
           <button className="btn btn-info btn-outline rounded-none font-bold">
             Make an Appointment
           </button>
