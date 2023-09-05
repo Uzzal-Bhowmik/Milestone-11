@@ -1,10 +1,14 @@
 import React, { useContext } from "react";
 import loginPic from "../../assets/images/login/login.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/ContextAuth";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -15,9 +19,23 @@ const Login = () => {
 
     signIn(email, password)
       .then((result) => {
-        console.log(result.user);
         form.reset();
         alert("Signed In Successfully!");
+
+        const signedUser = { email: result.user?.email };
+
+        fetch("http://localhost:5000/jwt", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(signedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            localStorage.setItem("car-doctor-access-token", data.token);
+            navigate(from, { replace: true });
+          });
       })
       .catch((error) => console.error(error));
   };

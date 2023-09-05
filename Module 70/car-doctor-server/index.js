@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -20,6 +21,29 @@ const client = new MongoClient(uri, {
   },
 });
 
+// jwt token vefiy
+const verifyJWT = (req, res, next) => {
+  const authorization = req.headers.authorization;
+
+  if (!authorization) {
+    return res
+      .status(401)
+      .send({ error: true, message: "Unauthorized Access" });
+  }
+
+  const token = authorization.split(" ")[1];
+
+  jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      return res
+        .status(403)
+        .send({ error: true, message: "unauthorized access" });
+    }
+    req.decoded = decoded;
+    next();
+  });
+};
+
 async function run() {
   try {
     await client.connect();
@@ -29,6 +53,18 @@ async function run() {
       .db("bookedServicesDB")
       .collection("bookings");
 
+    // jwt methods
+    app.post("/jwt", (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.JWT_TOKEN_SECRET, {
+        expiresIn: "1h",
+      });
+
+      // since token is string, it's better to convert to JSON format
+      res.send({ token });
+    });
+
+    // services get methods
     app.get("/services", async (req, res) => {
       const cursor = serviceCollection.find();
       const result = await cursor.toArray();
@@ -52,7 +88,10 @@ async function run() {
       res.send(result);
     });
 
-    app.get("/bookings", async (req, res) => {
+    // bookings get method
+    app.get("/bookings", verifyJWT, async (req, res) => {
+      // console.log(req.headers.authorization);
+
       const bookingEmail = req.query.email;
       let query = {};
       if (bookingEmail) {
@@ -62,12 +101,14 @@ async function run() {
       res.send(bookings);
     });
 
+    // bookings post method
     app.post("/bookings", async (req, res) => {
       const booking = req.body;
       const result = await bookingCollection.insertOne(booking);
       res.send(result);
     });
 
+    // booking patch method
     app.patch("/bookings/:id", async (req, res) => {
       const id = req.params.id;
       const body = req.body;
@@ -82,6 +123,7 @@ async function run() {
       res.send(result);
     });
 
+    // bookings delete method
     app.delete("/bookings/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) };

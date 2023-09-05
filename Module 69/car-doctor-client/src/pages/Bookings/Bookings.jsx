@@ -8,7 +8,14 @@ const Bookings = () => {
 
   const [bookingData, setBookingData] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/bookings?email=${user?.email}`)
+    fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
+      method: "GET",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem(
+          "car-doctor-access-token"
+        )}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setBookingData(data);
