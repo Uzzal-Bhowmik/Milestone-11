@@ -62,7 +62,7 @@ This flexible, schema-less structure allows you to adapt to changing data requir
 	- JWT Token or JSON Web Token is a secured form of transmitting data from server to client.
 	- JWT is usually pronounced as 'JOT' Token
 	- JWT token consists of 3 parts : Headers, Payload, Signature
-	- JWT token is basically used for Authorizationation i.e. when the user Authenticated using email and password he can access 	client side data but to access the server side he has to authorize. And to do that JWT is an internationally recognized way.
+	- JWT token is basically used for Authorizationation i.e. when the user Authenticates using email and password he can access 	client side data but to access the server side he has to authorize. And to do that JWT is an internationally recognized way.
 
 	** There are 2 main ways of storing the JWT token provided by the server to the client. The client needs to store it somewhere 	to use it later. The ways are: 
 		1> LocalStorage	

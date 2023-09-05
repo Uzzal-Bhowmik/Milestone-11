@@ -11,14 +11,17 @@ const Bookings = () => {
 
   const [bookingData, setBookingData] = useState([]);
   useEffect(() => {
-    fetch(`http://localhost:5000/bookings?email=${user?.email}`, {
-      method: "GET",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem(
-          "car-doctor-access-token"
-        )}`,
-      },
-    })
+    fetch(
+      `https://car-doctor-server-coral-eta.vercel.app/bookings?email=${user?.email}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            "car-doctor-access-token"
+          )}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (!data.error) {
@@ -36,7 +39,7 @@ const Bookings = () => {
   const handleDelete = (_id) => {
     const proceed = confirm("Are you sure you want to delete?");
     if (proceed) {
-      fetch(`http://localhost:5000/bookings/${_id}`, {
+      fetch(`https://car-doctor-server-coral-eta.vercel.app/bookings/${_id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -52,7 +55,7 @@ const Bookings = () => {
   };
 
   const handleConfirmBooking = (_id) => {
-    fetch(`http://localhost:5000/bookings/${_id}`, {
+    fetch(`https://car-doctor-server-coral-eta.vercel.app/bookings/${_id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

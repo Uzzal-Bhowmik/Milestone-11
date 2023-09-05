@@ -27,7 +27,9 @@ const router = createBrowserRouter([
       {
         path: "/services/:id",
         loader: async ({ params }) =>
-          await fetch(`http://localhost:5000/services/${params.id}`),
+          await fetch(
+            `https://car-doctor-server-coral-eta.vercel.app/services/${params.id}`
+          ),
         element: (
           <PrivateRoute>
             <ServiceCheckout />

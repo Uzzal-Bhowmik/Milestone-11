@@ -16,7 +16,7 @@ const ServiceCheckout = () => {
     const bookingDetails = { name, title, price, img, email };
     console.log(bookingDetails);
 
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://car-doctor-server-coral-eta.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",
