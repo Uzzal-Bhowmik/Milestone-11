@@ -28,6 +28,8 @@ async function run() {
 
     // products get method
     app.get("/products", (req, res) => {
+      const query = req.query;
+      console.log(query);
       productCollection
         .find({})
         .toArray()
