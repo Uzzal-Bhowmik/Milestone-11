@@ -1,0 +1,8 @@
+.navbar {
+  height: 90px;
+  z-index: 999;
+}
+.menu li a {
+  margin-right: 20px;
+  font-weight: bold;
+}

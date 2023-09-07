@@ -1,0 +1,21 @@
+.event-card {
+  position: relative;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.event-title {
+  position: absolute;
+  bottom: 0;
+  height: 18%;
+  width: 100%;
+  border-radius: 0px 0px 10px 10px;
+  transition: all 0.3s ease-out;
+}
+
+.event-card:hover .event-title {
+  height: 25%;
+}
+
+.event-title p:hover {
+  text-decoration: underline;
+}
