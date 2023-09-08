@@ -23,7 +23,9 @@ const router = createBrowserRouter([
       {
         path: "/events/:id",
         loader: async ({ params }) =>
-          await fetch(`http://localhost:5000/events/${params.id}`),
+          await fetch(
+            `https://volunteer-network-server-amber.vercel.app/events/${params.id}`
+          ),
         element: (
           <PrivateRouter>
             <EventRegister />
@@ -32,7 +34,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/registeredEvents",
-        element: <RegisteredEvents />,
+        element: (
+          <PrivateRouter>
+            <RegisteredEvents />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/register",

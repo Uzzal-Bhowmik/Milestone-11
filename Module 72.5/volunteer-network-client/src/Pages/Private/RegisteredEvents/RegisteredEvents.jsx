@@ -8,16 +8,33 @@ const RegisteredEvents = () => {
   const [regEvents, setRegEvents] = useState([]);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/registeredEvents?email=${user?.email}`)
+    fetch(
+      `https://volunteer-network-server-amber.vercel.app/registeredEvents?email=${user?.email}`,
+      {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem(
+            "volunteer-network-jwt-token"
+          )}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-        setRegEvents(data);
-        setIsLoading(false);
+        if (!data.error) {
+          setRegEvents(data);
+          setIsLoading(false);
+        } else {
+          // since token has expired sign out the user
+          logOut()
+            .then(() => {})
+            .catch((error) => console.error(error));
+        }
       });
-  }, [user?.email, isDeleted]);
+  }, [user, isDeleted]);
 
   // delete / cancel registered event
   const handleCancelReg = (_id) => {
@@ -31,9 +48,12 @@ const RegisteredEvents = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/registeredEvents/${_id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://volunteer-network-server-amber.vercel.app/registeredEvents/${_id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount > 0) {
@@ -52,11 +72,11 @@ const RegisteredEvents = () => {
   return (
     <>
       {isLoading ? (
-        <span className="loading loading-infinity text-red-500 text-6xl mx-auto block mt-16 w-[4.5rem]"></span>
+        <span className="loading loading-infinity text-red-500 text-6xl mx-auto block mt-16 w-[4rem]"></span>
       ) : (
         <>
           {regEvents.length !== 0 ? (
-            <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 my-14">
+            <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 my-14 p-4">
               {regEvents.map((regEvent) => (
                 <RegEventCard
                   key={regEvent._id}

@@ -12,7 +12,7 @@ const Login = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const from = location.state?.from?.pathName || "/";
+  let from = location.state?.from?.pathname || "/";
 
   // sign up method
   const handleLogin = (e) => {
@@ -48,8 +48,6 @@ const Login = () => {
   const handleGoogle = () => {
     googleSignIn()
       .then((result) => {
-        console.log(result.user);
-
         Swal.fire({
           position: "center",
           icon: "success",

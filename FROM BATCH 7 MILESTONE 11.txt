@@ -75,6 +75,13 @@ This flexible, schema-less structure allows you to adapt to changing data requir
 
 
 
+##### Code to produce JWT SECRET TOKEN KEY
+
+	1) type node and then enter
+	2) code: 
+
+		crypto.randomBytes(64).toString('hex')
+
 
 
 

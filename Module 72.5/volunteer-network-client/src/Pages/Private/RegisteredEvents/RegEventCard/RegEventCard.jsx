@@ -5,8 +5,8 @@ const RegEventCard = ({ regEvent, handleCancelReg }) => {
   const { _id, img, title, name, date } = regEvent;
 
   return (
-    <div className="card card-side bg-base-100 shadow-xl md:h-[219px] ">
-      <figure className="w-[35%]">
+    <div className="card card-side bg-base-100 shadow-xl md:h-[219px] flex-col md:flex-row">
+      <figure className="md:w-[35%] p-4 md:p-0">
         <img src={img} alt="event" loading="lazy" />
       </figure>
 

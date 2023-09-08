@@ -12,9 +12,7 @@ const Navigation = () => {
   // log out method
   const handleLogout = () => {
     logOut()
-      .then(() => {
-        console.log("sign out successful");
-      })
+      .then(() => {})
       .catch((err) => console.error(err));
   };
 

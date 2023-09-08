@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
+var jwt = require("jsonwebtoken");
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -20,6 +21,31 @@ const client = new MongoClient(uri, {
   },
 });
 
+// jwt token verify
+const verifyToken = (req, res, next) => {
+  const authorization = req.headers.authorization;
+
+  if (!authorization) {
+    return res
+      .status(401)
+      .send({ error: true, message: "Unauthorized Access" });
+  }
+
+  // token
+  const token = authorization.split(" ")[1];
+
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+    if (err) {
+      return res
+        .status(401)
+        .send({ error: true, message: "unauthorized access" });
+    }
+
+    req.decoded = decoded;
+    next();
+  });
+};
+
 async function run() {
   try {
     await client.connect();
@@ -31,6 +57,16 @@ async function run() {
     const registeredEventCollection = client
       .db("volunteerNetworkDB")
       .collection("registeredEvents");
+
+    // jwt token method
+    app.post("/jwt", async (req, res) => {
+      const user = req.body;
+      const token = jwt.sign(user, process.env.JWT_SECRET_KEY, {
+        expiresIn: "1h",
+      });
+
+      res.send({ token });
+    });
 
     // events get method
     app.get("/events", async (req, res) => {
@@ -45,20 +81,23 @@ async function run() {
       res.send(result);
     });
 
-    // events register get method
-    app.get("/registeredEvents", async (req, res) => {
-      const result = await registeredEventCollection.find().toArray();
-      res.send(result);
-    });
-
     // events register get method based on query
-    app.get("/registeredEvents", async (req, res) => {
-      const query = req.query;
-      const result = await registeredEventCollection
-        .find({ email: query.email })
-        .toArray();
+    app.get("/registeredEvents", verifyToken, async (req, res) => {
+      const userEmail = req.query?.email;
 
-      console.log(result);
+      if (req.decoded.email !== userEmail) {
+        return res
+          .status(403)
+          .send({ error: true, message: "forbidden access" });
+      }
+
+      let query = {};
+      if (userEmail) {
+        query = { email: userEmail };
+      }
+
+      const result = await registeredEventCollection.find(query).toArray();
+      res.send(result);
     });
 
     // events register post method

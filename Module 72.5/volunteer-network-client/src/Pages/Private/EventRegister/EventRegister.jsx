@@ -16,13 +16,16 @@ const EventRegister = () => {
     const name = e.target.name.value;
     const regEvent = { img, title, name, date, email: user?.email };
 
-    fetch("http://localhost:5000/registeredEvents", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(regEvent),
-    })
+    fetch(
+      "https://volunteer-network-server-amber.vercel.app/registeredEvents",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(regEvent),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.insertedId) {
@@ -36,8 +39,6 @@ const EventRegister = () => {
         }
       });
   };
-
-  console.log(event);
 
   return (
     <div className="flex justify-center items-center my-10">
