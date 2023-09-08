@@ -32,23 +32,17 @@ const Navigation = () => {
       <li>
         <Link to="/">Blogs</Link>
       </li>
+      {user?.uid && (
+        <li>
+          <Link to="/registeredEvents">My Events</Link>
+        </li>
+      )}
     </>
-  );
-
-  const dropdownMenu = (
-    <ul className="p-2">
-      <li>
-        <a>Submenu 1</a>
-      </li>
-      <li>
-        <a>Submenu 2</a>
-      </li>
-    </ul>
   );
 
   return (
     <div className="navbar bg-transparent container">
-      <div className="navbar-start w-[40%]">
+      <div className="navbar-start w-[20%]">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
@@ -117,26 +111,28 @@ const Navigation = () => {
         </Link>
       </div>
 
-      <div className="navbar-end hidden lg:flex w-[60%]">
+      {/* navbar right side */}
+      <div className="navbar-end hidden lg:flex ms-auto w-[fit-content]">
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navlinks}</ul>
         </div>
 
         {user?.uid ? (
           <>
-            <Link>
-              <div className="avatar mr-3">
-                <div className="w-12 rounded-full border bg-blue-500">
-                  {user?.photoURL ? (
+            <div className="avatar mr-3">
+              <div className="w-12 rounded-full border bg-blue-500">
+                {user?.photoURL ? (
+                  <>
                     <img src={user?.photoURL} />
-                  ) : (
-                    <div className=" text-center pt-2 text-2xl font-bold text-white">
-                      <span>{user?.email[0].toUpperCase()}</span>
-                    </div>
-                  )}
-                </div>
+                  </>
+                ) : (
+                  <div className=" text-center pt-2 text-2xl font-bold text-white">
+                    <span>{user?.email[0].toUpperCase()}</span>
+                  </div>
+                )}
               </div>
-            </Link>
+            </div>
+
             <button className="btn btn-error mr-5" onClick={handleLogout}>
               Log Out
             </button>

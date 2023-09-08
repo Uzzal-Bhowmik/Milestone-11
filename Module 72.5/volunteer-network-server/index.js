@@ -28,6 +28,10 @@ async function run() {
       .db("volunteerNetworkDB")
       .collection("events");
 
+    const registeredEventCollection = client
+      .db("volunteerNetworkDB")
+      .collection("registeredEvents");
+
     // events get method
     app.get("/events", async (req, res) => {
       const result = await eventCollection.find().toArray();
@@ -38,6 +42,38 @@ async function run() {
     app.get("/events/:id", async (req, res) => {
       const id = req.params.id;
       const result = await eventCollection.findOne({ _id: new ObjectId(id) });
+      res.send(result);
+    });
+
+    // events register get method
+    app.get("/registeredEvents", async (req, res) => {
+      const result = await registeredEventCollection.find().toArray();
+      res.send(result);
+    });
+
+    // events register get method based on query
+    app.get("/registeredEvents", async (req, res) => {
+      const query = req.query;
+      const result = await registeredEventCollection
+        .find({ email: query.email })
+        .toArray();
+
+      console.log(result);
+    });
+
+    // events register post method
+    app.post("/registeredEvents", async (req, res) => {
+      const body = req.body;
+      const result = await registeredEventCollection.insertOne(body);
+      res.send(result);
+    });
+
+    // registered event delete method
+    app.delete("/registeredEvents/:id", async (req, res) => {
+      const id = req.params.id;
+      const result = await registeredEventCollection.deleteOne({
+        _id: new ObjectId(id),
+      });
       res.send(result);
     });
 

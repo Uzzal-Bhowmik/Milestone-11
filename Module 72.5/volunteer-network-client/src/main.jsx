@@ -9,6 +9,7 @@ import EventRegister from "./Pages/Private/EventRegister/EventRegister.jsx";
 import Register from "./Pages/Register/Register.jsx";
 import Login from "./Pages/Login/Login.jsx";
 import PrivateRouter from "./Pages/PrivateRoute/PrivateRouter.jsx";
+import RegisteredEvents from "./Pages/Private/RegisteredEvents/RegisteredEvents.jsx";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
             <EventRegister />
           </PrivateRouter>
         ),
+      },
+      {
+        path: "/registeredEvents",
+        element: <RegisteredEvents />,
       },
       {
         path: "/register",

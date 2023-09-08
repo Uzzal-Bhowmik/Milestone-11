@@ -1,22 +1,63 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./EventRegister.css";
 import { useLoaderData } from "react-router-dom";
+import { AuthContext } from "../../../context/AuthProvider";
+import Swal from "sweetalert2";
 
 const EventRegister = () => {
   const event = useLoaderData();
+  const { _id, img, title } = event;
+  const { user } = useContext(AuthContext);
+
+  const handleEventRegister = (e) => {
+    e.preventDefault();
+
+    const date = e.target.date.value;
+    const name = e.target.name.value;
+    const regEvent = { img, title, name, date, email: user?.email };
+
+    fetch("http://localhost:5000/registeredEvents", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(regEvent),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.insertedId) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Event Registration Successful",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
 
   console.log(event);
 
   return (
     <div className="flex justify-center items-center my-10">
-      <form className="w-[90%] md:w-[40%] py-9 px-14 event-reg-form">
+      <form
+        className="w-[90%] md:w-[40%] py-9 px-14 event-reg-form"
+        onSubmit={handleEventRegister}
+      >
         <h4 className="text-2xl font-extrabold mb-8">
           Register as a Volunteer
         </h4>
 
-        <input type="text" name="name" placeholder="Full Name" required />
+        <input
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          defaultValue={user?.displayName && user.displayName}
+          required
+        />
         <br />
-        <input type="email" name="email" placeholder="Email" />
+        <input type="email" defaultValue={user?.email} disabled />
         <br />
         <input type="date" name="date" placeholder="Date" required />
         <br />
@@ -28,7 +69,10 @@ const EventRegister = () => {
         <br />
         <input type="text" defaultValue={"Event: " + event?.title} disabled />
         <br />
-        <button className="btn btn-primary btn-block rounded-none">
+        <button
+          type="submit"
+          className="btn btn-primary btn-block rounded-none"
+        >
           Registration
         </button>
       </form>
