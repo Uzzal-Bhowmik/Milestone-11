@@ -9,8 +9,8 @@ const EventCard = ({ event }) => {
   const randomBg = eventsBg[Math.floor(Math.random() * eventsBg.length)];
 
   return (
-    <div className="w-[270px] h-[320px] event-card mx-auto">
-      <img src={img} alt="" className="w-full h-[90%]" />
+    <div className="w-[270px] h-[320px] event-card">
+      <img src={img} alt="" className="w-full h-[90%]" loading="lazy" />
       <div
         className="event-title flex items-center justify-center"
         style={{ backgroundColor: randomBg }}

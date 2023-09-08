@@ -22,11 +22,13 @@ const AuthProvider = ({ children }) => {
 
   // sign up
   const signUp = (email, password) => {
+    setIsLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // sign in
   const signIn = (email, password) => {
+    setIsLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
@@ -50,7 +52,15 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
-  const value = { user, isLoading, signIn, signUp, logOut, googleSignIn };
+  const value = {
+    user,
+    isLoading,
+    signIn,
+    signUp,
+    logOut,
+    googleSignIn,
+    setIsLoading,
+  };
   return (
     <>
       <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

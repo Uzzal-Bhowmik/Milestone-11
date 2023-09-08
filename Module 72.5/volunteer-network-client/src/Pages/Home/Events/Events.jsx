@@ -29,9 +29,13 @@ const Events = () => {
         </div>
       </div>
 
-      <div className="w-[80%] mx-auto grid grid-cols-1 md:grid-cols-4 gap-7">
+      <div className="w-[80%] mx-auto grid grid-cols-1 md:grid-cols-4 gap-7 mt-10 md:mt-0">
         {events.map((event) => (
-          <Link key={event._id} to={`/events/${event._id}`}>
+          <Link
+            key={event._id}
+            to={`/events/${event._id}`}
+            className="w-fit mx-auto"
+          >
             <EventCard event={event} />
           </Link>
         ))}

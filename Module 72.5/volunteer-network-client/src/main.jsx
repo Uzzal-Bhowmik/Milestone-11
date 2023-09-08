@@ -8,6 +8,7 @@ import AuthProvider from "./context/AuthProvider.jsx";
 import EventRegister from "./Pages/Private/EventRegister/EventRegister.jsx";
 import Register from "./Pages/Register/Register.jsx";
 import Login from "./Pages/Login/Login.jsx";
+import PrivateRouter from "./Pages/PrivateRoute/PrivateRouter.jsx";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,11 @@ const router = createBrowserRouter([
         path: "/events/:id",
         loader: async ({ params }) =>
           await fetch(`http://localhost:5000/events/${params.id}`),
-        element: <EventRegister />,
+        element: (
+          <PrivateRouter>
+            <EventRegister />
+          </PrivateRouter>
+        ),
       },
       {
         path: "/register",

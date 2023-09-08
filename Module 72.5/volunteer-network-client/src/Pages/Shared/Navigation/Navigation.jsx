@@ -1,11 +1,22 @@
 import React, { useContext } from "react";
 import "./Navigation.css";
 import logo from "../../../assets/logos/Group 1329.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const Navigation = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
+
+  const location = useLocation();
+
+  // log out method
+  const handleLogout = () => {
+    logOut()
+      .then(() => {
+        console.log("sign out successful");
+      })
+      .catch((err) => console.error(err));
+  };
 
   const navlinks = (
     <>
@@ -24,9 +35,20 @@ const Navigation = () => {
     </>
   );
 
+  const dropdownMenu = (
+    <ul className="p-2">
+      <li>
+        <a>Submenu 1</a>
+      </li>
+      <li>
+        <a>Submenu 2</a>
+      </li>
+    </ul>
+  );
+
   return (
     <div className="navbar bg-transparent container">
-      <div className="navbar-start ">
+      <div className="navbar-start w-[40%]">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
             <svg
@@ -50,13 +72,41 @@ const Navigation = () => {
           >
             {navlinks}
 
-            <li className="items-start">
-              <Link className="btn btn-primary py-3 my-4" to="/register">
-                Register
-              </Link>
-            </li>
-            <li className="items-start">
-              <Link className="btn btn-neutral py-3 mb-5" to="/admin">
+            {user?.uid ? (
+              <>
+                <Link>
+                  <div className="avatar mr-3">
+                    <div className="w-12 rounded-full border bg-blue-500">
+                      {user?.photoURL ? (
+                        <img src={user?.photoURL} />
+                      ) : (
+                        <div className=" text-center pt-2 text-2xl font-bold text-white">
+                          <span>{user?.email[0].toUpperCase()}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </Link>
+                <button className="btn btn-error mr-5" onClick={handleLogout}>
+                  Log Out
+                </button>
+              </>
+            ) : (
+              <>
+                {location.pathname.includes("register") ? (
+                  <Link className="btn btn-primary mr-5" to="/login">
+                    Login
+                  </Link>
+                ) : (
+                  <Link className="btn btn-primary mr-5" to="/register">
+                    Register
+                  </Link>
+                )}
+              </>
+            )}
+
+            <li>
+              <Link className="btn btn-neutral mt-2 pt-3" to="/admin">
                 Admin
               </Link>
             </li>
@@ -67,14 +117,44 @@ const Navigation = () => {
         </Link>
       </div>
 
-      <div className="navbar-end hidden lg:flex">
+      <div className="navbar-end hidden lg:flex w-[60%]">
         <div className="hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{navlinks}</ul>
         </div>
 
-        <Link className="btn btn-primary mr-5" to="/register">
-          Register
-        </Link>
+        {user?.uid ? (
+          <>
+            <Link>
+              <div className="avatar mr-3">
+                <div className="w-12 rounded-full border bg-blue-500">
+                  {user?.photoURL ? (
+                    <img src={user?.photoURL} />
+                  ) : (
+                    <div className=" text-center pt-2 text-2xl font-bold text-white">
+                      <span>{user?.email[0].toUpperCase()}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </Link>
+            <button className="btn btn-error mr-5" onClick={handleLogout}>
+              Log Out
+            </button>
+          </>
+        ) : (
+          <>
+            {location.pathname.includes("register") ? (
+              <Link className="btn btn-primary mr-5" to="/login">
+                Login
+              </Link>
+            ) : (
+              <Link className="btn btn-primary mr-5" to="/register">
+                Register
+              </Link>
+            )}
+          </>
+        )}
+
         <Link className="btn btn-neutral" to="/admin">
           Admin
         </Link>
