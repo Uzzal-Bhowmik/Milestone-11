@@ -52,7 +52,7 @@ const AuthProvider = ({ children }) => {
       if (currentUser) {
         const loggedInUser = { email: currentUser.email };
 
-        fetch("https://volunteer-network-server-amber.vercel.app/jwt", {
+        fetch("https://volunteer-network-server-ppid.onrender.com/jwt", {
           method: "POST",
           headers: {
             "content-type": "application/json",

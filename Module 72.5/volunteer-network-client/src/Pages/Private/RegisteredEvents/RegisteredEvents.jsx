@@ -12,7 +12,7 @@ const RegisteredEvents = () => {
 
   useEffect(() => {
     fetch(
-      `https://volunteer-network-server-amber.vercel.app/registeredEvents?email=${user?.email}`,
+      `https://volunteer-network-server-ppid.onrender.com/registeredEvents?email=${user?.email}`,
       {
         method: "GET",
         headers: {
@@ -49,7 +49,7 @@ const RegisteredEvents = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `https://volunteer-network-server-amber.vercel.app/registeredEvents/${_id}`,
+          `https://volunteer-network-server-ppid.onrender.com/registeredEvents/${_id}`,
           {
             method: "DELETE",
           }

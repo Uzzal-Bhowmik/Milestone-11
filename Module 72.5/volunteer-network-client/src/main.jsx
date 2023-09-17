@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         path: "/events/:id",
         loader: async ({ params }) =>
           await fetch(
-            `https://volunteer-network-server-amber.vercel.app/events/${params.id}`
+            `https://volunteer-network-server-ppid.onrender.com/events/${params.id}`
           ),
         element: (
           <PrivateRouter>

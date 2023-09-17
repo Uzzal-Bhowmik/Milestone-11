@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Events = () => {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-    fetch("https://volunteer-network-server-amber.vercel.app/events")
+    fetch("https://volunteer-network-server-ppid.onrender.com/events")
       .then((res) => res.json())
       .then((data) => {
         setEvents(data);

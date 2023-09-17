@@ -17,7 +17,7 @@ const EventRegister = () => {
     const regEvent = { img, title, name, date, email: user?.email };
 
     fetch(
-      "https://volunteer-network-server-amber.vercel.app/registeredEvents",
+      "https://volunteer-network-server-ppid.onrender.com/registeredEvents",
       {
         method: "POST",
         headers: {
