@@ -3,12 +3,14 @@ import "./RegisteredEvents.css";
 import { AuthContext } from "../../../context/AuthProvider";
 import RegEventCard from "./RegEventCard/RegEventCard";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const RegisteredEvents = () => {
   const [regEvents, setRegEvents] = useState([]);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { user, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(
@@ -32,6 +34,7 @@ const RegisteredEvents = () => {
           logOut()
             .then(() => {})
             .catch((error) => console.error(error));
+          navigate("/login");
         }
       });
   }, [user, isDeleted]);
